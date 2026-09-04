@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dystopian Hobbies — Manga, Cartas &amp; Figuras</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#120f1b;
+    --panel:#1b1730;
+    --panel-2:#241f3d;
+    --line:rgba(245,241,250,0.09);
+    --text:#f5f1fa;
+    --muted:#a79fc4;
+    --magenta:#e8336d;
+    --cyan:#29c4d9;
+    --amber:#f2a93b;
+    --font-display:'Unbounded', sans-serif;
+    --font-body:'Manrope', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.55;
+  }
+  a{color:inherit;}
+  img,svg{display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- focus ---------- */
+  a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
+    outline:2px solid var(--cyan);
+    outline-offset:2px;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:40;
+    background:rgba(18,15,27,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;max-width:1180px;margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .brand-mark{
+    width:38px;height:38px;border-radius:10px;
+    background:linear-gradient(135deg,var(--magenta),var(--cyan));
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-display);font-size:14px;font-weight:800;color:var(--ink);
+    flex-shrink:0;
+  }
+  .brand-name{
+    font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:0.02em;
+  }
+  .brand-name span{color:var(--muted);font-weight:400;display:block;font-size:11px;font-family:var(--font-body);margin-top:2px;}
+  nav.mainnav{display:flex;gap:28px;}
+  nav.mainnav a{
+    font-size:14px;font-weight:600;text-decoration:none;color:var(--muted);
+    transition:color .15s ease;
+  }
+  nav.mainnav a:hover{color:var(--text);}
+  .cart-btn{
+    position:relative;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--text);
+    width:42px;height:42px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+  }
+  .cart-btn svg{width:19px;height:19px;stroke:var(--text);}
+  .cart-count{
+    position:absolute;top:-6px;right:-6px;
+    background:var(--magenta);color:#fff;
+    font-size:11px;font-weight:700;
+    min-width:18px;height:18px;border-radius:9px;
+    display:flex;align-items:center;justify-content:center;
+    padding:0 4px;
+    font-family:var(--font-body);
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-skyline{
+    position:absolute;inset:0;
+    opacity:0.55;
+    pointer-events:none;
+  }
+  .hero-inner{
+    position:relative;z-index:2;
+    max-width:1180px;margin:0 auto;
+    padding:96px 28px 100px;
+    display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:end;
+  }
+  .hero-eyebrow{
+    font-size:13px;color:var(--cyan);font-weight:700;margin:0 0 18px;
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-size:clamp(2.4rem,5vw,4rem);
+    line-height:1.05;
+    margin:0 0 22px;
+    font-weight:600;
+    max-width:11ch;
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(120deg,var(--magenta),var(--amber));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lead{
+    color:var(--muted);
+    max-width:46ch;
+    font-size:16px;
+    margin:0 0 30px;
+  }
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:14px;
+    border-radius:10px;
+    padding:13px 22px;
+    border:1px solid transparent;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--text);color:var(--ink);}
+  .btn-ghost{background:transparent;border-color:var(--line);color:var(--text);}
+  .hero-stats{
+    display:flex;flex-direction:column;gap:18px;
+    border-left:1px solid var(--line);
+    padding-left:28px;
+  }
+  .hero-stat b{
+    display:block;font-family:var(--font-display);font-size:1.6rem;font-weight:600;
+  }
+  .hero-stat span{color:var(--muted);font-size:13px;}
+
+  /* ---------- section shell ---------- */
+  section.catalog{padding:76px 0;border-bottom:1px solid var(--line);}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    margin-bottom:34px;gap:24px;flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-family:var(--font-display);font-weight:600;
+    font-size:1.7rem;margin:0 0 8px;
+  }
+  .section-head p{color:var(--muted);margin:0;max-width:52ch;font-size:14.5px;}
+  .section-tag{
+    font-size:12px;font-weight:700;padding:6px 12px;border-radius:100px;
+    border:1px solid var(--line);white-space:nowrap;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:20px;
+  }
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  .card-visual{
+    height:150px;
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .card-visual svg{width:52px;height:52px;}
+  .card-visual .stock-badge{
+    position:absolute;top:12px;right:12px;
+    background:rgba(18,15,27,0.55);
+    border:1px solid rgba(255,255,255,0.18);
+    color:var(--text);
+    font-size:11px;font-weight:700;
+    padding:4px 9px;border-radius:100px;
+  }
+  .card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1;}
+  .card-body h3{margin:0;font-size:15px;font-weight:700;line-height:1.35;}
+  .card-body p.desc{
+    margin:0;color:var(--muted);font-size:13px;line-height:1.5;flex:1;
+  }
+  .card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
+  .price{font-family:var(--font-display);font-weight:600;font-size:16px;}
+  .add-btn{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--text);
+    font-size:12.5px;font-weight:700;
+    padding:9px 14px;border-radius:9px;
+    cursor:pointer;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .add-btn:hover{border-color:var(--cyan);}
+  .add-btn.added{background:var(--cyan);color:var(--ink);border-color:var(--cyan);}
+  .add-btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+  /* per-category accent */
+  .cat-manga .card-visual{background:radial-gradient(circle at 30% 20%, rgba(41,196,217,0.28), transparent 65%), var(--panel-2);}
+  .cat-manga .card-visual svg{stroke:var(--cyan);}
+  .cat-manga .stock-badge{color:var(--cyan);}
+  .cat-cartas .card-visual{background:radial-gradient(circle at 30% 20%, rgba(232,51,109,0.28), transparent 65%), var(--panel-2);}
+  .cat-cartas .card-visual svg{stroke:var(--magenta);}
+  .cat-cartas .stock-badge{color:var(--magenta);}
+  .cat-figuras .card-visual{background:radial-gradient(circle at 30% 20%, rgba(242,169,59,0.28), transparent 65%), var(--panel-2);}
+  .cat-figuras .card-visual svg{stroke:var(--amber);}
+  .cat-figuras .stock-badge{color:var(--amber);}
+
+  /* ---------- footer ---------- */
+  footer{padding:56px 0 40px;}
+  .footer-grid{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;
+    padding-bottom:36px;border-bottom:1px solid var(--line);
+  }
+  footer h4{font-size:13px;margin:0 0 14px;color:var(--muted);font-weight:700;}
+  footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+  footer ul a{font-size:14px;text-decoration:none;color:var(--text);}
+  footer ul a:hover{color:var(--cyan);}
+  .footer-bottom{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:22px;color:var(--muted);font-size:12.5px;flex-wrap:wrap;gap:10px;
+  }
+
+  /* ---------- cart drawer ---------- */
+  .overlay{
+    position:fixed;inset:0;background:rgba(8,6,14,0.6);
+    opacity:0;pointer-events:none;transition:opacity .2s ease;
+    z-index:60;
+  }
+  .overlay.show{opacity:1;pointer-events:auto;}
+
+  .cart-drawer{
+    position:fixed;top:0;right:0;height:100%;
+    width:min(420px,100%);
+    background:var(--panel);
+    border-left:1px solid var(--line);
+    z-index:70;
+    display:flex;flex-direction:column;
+    transform:translateX(100%);
+    transition:transform .25s ease;
+  }
+  .cart-drawer.open{transform:translateX(0);}
+  .cart-head{
+    padding:22px 22px 16px;border-bottom:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .cart-head h3{margin:0;font-family:var(--font-display);font-size:16px;font-weight:600;}
+  .close-btn{
+    background:none;border:none;color:var(--muted);cursor:pointer;
+    width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+    border-radius:8px;
+  }
+  .close-btn:hover{background:var(--panel-2);color:var(--text);}
+  .cart-items{flex:1;overflow-y:auto;padding:16px 22px;display:flex;flex-direction:column;gap:14px;}
+  .cart-empty{color:var(--muted);font-size:14px;text-align:center;margin-top:40px;}
+  .cart-item{
+    display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;
+  }
+  .cart-item .mini-icon{
+    width:44px;height:44px;border-radius:9px;background:var(--panel-2);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .cart-item .mini-icon svg{width:20px;height:20px;}
+  .cart-item-info h5{margin:0 0 4px;font-size:13.5px;font-weight:700;}
+  .cart-item-info .qty-row{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12.5px;}
+  .qty-btn{
+    width:20px;height:20px;border-radius:5px;border:1px solid var(--line);
+    background:transparent;color:var(--text);cursor:pointer;font-size:12px;
+    display:flex;align-items:center;justify-content:center;line-height:1;
+  }
+  .cart-item-price{font-weight:700;font-size:13.5px;white-space:nowrap;}
+  .remove-link{
+    grid-column:1/-1;justify-self:end;
+    background:none;border:none;color:var(--muted);font-size:11.5px;
+    text-decoration:underline;cursor:pointer;padding:0;
+  }
+  .cart-foot{border-top:1px solid var(--line);padding:18px 22px 22px;}
+  .subtotal-row{display:flex;justify-content:space-between;margin-bottom:14px;font-size:14px;}
+  .subtotal-row b{font-family:var(--font-display);font-size:17px;font-weight:600;}
+  .checkout-btn{
+    width:100%;background:linear-gradient(120deg,var(--magenta),var(--amber));
+    color:var(--ink);border:none;border-radius:10px;padding:14px;
+    font-weight:800;font-size:14px;cursor:pointer;font-family:var(--font-body);
+  }
+  .checkout-btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+  /* ---------- checkout modal ---------- */
+  .modal{
+    position:fixed;inset:0;z-index:80;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .2s ease;
+    padding:20px;
+  }
+  .modal.show{opacity:1;pointer-events:auto;}
+  .modal-card{
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:18px;max-width:440px;width:100%;
+    padding:30px;max-height:88vh;overflow-y:auto;
+  }
+  .modal-card h3{font-family:var(--font-display);font-weight:600;font-size:1.25rem;margin:0 0 6px;}
+  .modal-card p.sub{color:var(--muted);font-size:13.5px;margin:0 0 22px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:6px;font-weight:600;}
+  .field input{
+    width:100%;background:var(--panel-2);border:1px solid var(--line);
+    border-radius:9px;padding:11px 13px;color:var(--text);font-size:14px;
+    font-family:var(--font-body);
+  }
+  .field input:focus{border-color:var(--cyan);outline:none;}
+  .field-row{display:flex;gap:12px;}
+  .field-row .field{flex:1;}
+  .order-summary{
+    background:var(--panel-2);border-radius:10px;padding:14px 16px;margin-bottom:18px;
+    font-size:13px;color:var(--muted);
+  }
+  .order-summary div{display:flex;justify-content:space-between;padding:3px 0;}
+  .order-summary .total-line{color:var(--text);font-weight:700;border-top:1px solid var(--line);margin-top:6px;padding-top:8px;}
+  .success-box{text-align:center;padding:10px 0 4px;}
+  .success-icon{
+    width:56px;height:56px;border-radius:50%;
+    background:linear-gradient(120deg,var(--cyan),var(--amber));
+    display:flex;align-items:center;justify-content:center;margin:0 auto 18px;
+  }
+  .success-icon svg{width:26px;height:26px;stroke:var(--ink);}
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px){
+    .hero-inner{grid-template-columns:1fr;padding:64px 24px 60px;}
+    .hero-stats{border-left:none;padding-left:0;flex-direction:row;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px;}
+    nav.mainnav{display:none;}
+    .footer-grid{grid-template-columns:1fr;gap:26px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="#top" class="brand">
+      <div class="brand-mark">DH</div>
+      <div class="brand-name">DYSTOPIAN HOBBIES<span>Manga · Cartas · Figuras</span></div>
+    </a>
+    <nav class="mainnav">
+      <a href="#manga">Manga</a>
+      <a href="#cartas">Cartas</a>
+      <a href="#figuras">Figuras</a>
+    </nav>
+    <button class="cart-btn" id="cartToggle" aria-label="Abrir carrito">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</div>
+
+<header class="hero" id="top">
+  <svg class="hero-skyline" viewBox="0 0 1180 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="skyfade" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#241f3d" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#120f1b" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <rect x="0" y="0" width="1180" height="420" fill="url(#skyfade)"/>
+    <g stroke="rgba(245,241,250,0.10)" stroke-width="1">
+      <rect x="60" y="180" width="70" height="240" fill="#1b1730"/>
+      <rect x="150" y="120" width="46" height="300" fill="#1b1730"/>
+      <rect x="215" y="220" width="90" height="200" fill="#1b1730"/>
+      <rect x="900" y="150" width="60" height="270" fill="#1b1730"/>
+      <rect x="975" y="90" width="40" height="330" fill="#1b1730"/>
+      <rect x="1030" y="200" width="100" height="220" fill="#1b1730"/>
+    </g>
+    <g stroke="#29c4d9" stroke-opacity="0.5" stroke-width="1">
+      <line x1="60" y1="200" x2="130" y2="200"/>
+      <line x1="150" y1="150" x2="196" y2="150"/>
+      <line x1="975" y1="120" x2="1015" y2="120"/>
+    </g>
+    <g stroke="#e8336d" stroke-opacity="0.45" stroke-width="1">
+      <line x1="900" y1="190" x2="960" y2="190"/>
+      <line x1="1030" y1="240" x2="1130" y2="240"/>
+    </g>
+  </svg>
+
+  <div class="hero-inner">
+    <div>
+      <p class="hero-eyebrow">TIENDA DE COLECCIONISMO OTAKU</p>
+      <h1>Colecciona el <em>futuro</em>, un volumen a la vez.</h1>
+      <p class="lead">Manga importado, cajas de cartas coleccionables y figuras de edición limitada para quienes ven el mañana en cada estantería. Todo en stock, listo para enviarse esta semana.</p>
+      <div class="hero-ctas">
+        <a href="#manga" class="btn btn-primary">Ver catálogo</a>
+        <a href="#figuras" class="btn btn-ghost">Novedades en figuras</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><b>30</b><span>referencias activas en tienda</span></div>
+      <div class="hero-stat"><b>3</b><span>categorías: manga, cartas y figuras</span></div>
+      <div class="hero-stat"><b>24–48h</b><span>preparación de pedidos</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="catalog cat-manga" id="manga">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Manga</h2>
+          <p>Tomos importados y ediciones de coleccionista, en tapa blanda y con sobrecubierta cuando el volumen lo incluye.</p>
+        </div>
+        <span class="section-tag" style="color:var(--cyan);border-color:rgba(41,196,217,0.4);">10 referencias</span>
+      </div>
+      <div class="grid" id="grid-manga"></div>
+    </div>
+  </section>
+
+  <section class="catalog cat-cartas" id="cartas">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Cajas de cartas</h2>
+          <p>Cajas selladas de fábrica: booster boxes, displays de torneo y ediciones especiales de los juegos de cartas más buscados.</p>
+        </div>
+        <span class="section-tag" style="color:var(--magenta);border-color:rgba(232,51,109,0.4);">10 referencias</span>
+      </div>
+      <div class="grid" id="grid-cartas"></div>
+    </div>
+  </section>
+
+  <section class="catalog cat-figuras" id="figuras">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Figuras</h2>
+          <p>Figuras de PVC y resina, escala fija y versiones chibi, con caja original y certificado de edición limitada cuando aplica.</p>
+        </div>
+        <span class="section-tag" style="color:var(--amber);border-color:rgba(242,169,59,0.4);">10 referencias</span>
+      </div>
+      <div class="grid" id="grid-figuras"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom:14px;">
+          <div class="brand-mark">DH</div>
+          <div class="brand-name">DYSTOPIAN HOBBIES</div>
+        </div>
+        <p style="color:var(--muted);font-size:13.5px;max-width:34ch;margin:0;">Tienda especializada en manga, trading card games y figuras de colección para la comunidad friki.</p>
+      </div>
+      <div>
+        <h4>TIENDA</h4>
+        <ul>
+          <li><a href="#manga">Manga</a></li>
+          <li><a href="#cartas">Cajas de cartas</a></li>
+          <li><a href="#figuras">Figuras</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>AYUDA</h4>
+        <ul>
+          <li><a href="#">Envíos y plazos</a></li>
+          <li><a href="#">Cambios y devoluciones</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Dystopian Hobbies. Todos los derechos reservados.</span>
+      <span>Sitio de demostración — sin pasarela de pago real.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="cart-drawer" id="cartDrawer" aria-label="Carrito de compra">
+  <div class="cart-head">
+    <h3>Tu carrito</h3>
+    <button class="close-btn" id="closeCart" aria-label="Cerrar carrito">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <p class="cart-empty">Tu carrito está vacío. Añade algún manga, caja de cartas o figura del catálogo.</p>
+  </div>
+  <div class="cart-foot">
+    <div class="subtotal-row"><span>Subtotal</span><b id="cartSubtotal">0,00 €</b></div>
+    <button class="checkout-btn" id="checkoutBtn" disabled>Finalizar compra</button>
+  </div>
+</aside>
+
+<div class="modal" id="checkoutModal">
+  <div class="modal-card" id="modalCard"></div>
+</div>
+
+<script>
+(function(){
+
+  function icon(type){
+    if(type==='book'){
+      return '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>';
+    }
+    if(type==='cards'){
+      return '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="12" height="16" rx="2" transform="rotate(-8 10 14)"/><rect x="8" y="3" width="12" height="16" rx="2"/></svg>';
+    }
+    return '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="3"/><path d="M6 21v-5a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v5"/><path d="M9 13v-2M15 13v-2"/></svg>';
+  }
+
+  const products = [
+    // MANGA
+    {id:'mg1',cat:'manga',icon:'book',name:'Ecos de Neón — Vol. 1',desc:'Primer tomo de la saga cyberpunk sobre una mensajera que cruza los distritos prohibidos de Nueva Kessho.',price:9.95,stock:14},
+    {id:'mg2',cat:'manga',icon:'book',name:'Ronin de Cristal — Vol. 3',desc:'Un samurái androide busca a su creadora en una ciudad donde la memoria se vende por partes.',price:10.50,stock:9},
+    {id:'mg3',cat:'manga',icon:'book',name:'Ciudad Fantasma — Vol. 7',desc:'La serie de misterio urbano llega a su arco más oscuro: los pisos abandonados empiezan a moverse.',price:11.25,stock:6},
+    {id:'mg4',cat:'manga',icon:'book',name:'Sueños de Titanio — Vol. 2',desc:'Mechas obsoletos, pilotos adolescentes y una guerra que nadie recuerda haber empezado.',price:9.95,stock:18},
+    {id:'mg5',cat:'manga',icon:'book',name:'El Último Farolero — Vol. 5',desc:'En una metrópoli sin electricidad, un joven enciende faroles y enciende también la resistencia.',price:10.95,stock:11},
+    {id:'mg6',cat:'manga',icon:'book',name:'Insectos de Acero — Vol. 1',desc:'Un entomólogo descubre que los enjambres mecánicos de la ciudad tienen mente propia.',price:9.50,stock:20},
+    {id:'mg7',cat:'manga',icon:'book',name:'Crónicas de Kessho — Vol. 4',desc:'La saga insignia de la editorial: cuatro hermanas heredan un imperio en ruinas y un secreto peor.',price:12.00,stock:7},
+    {id:'mg8',cat:'manga',icon:'book',name:'Nightshade High — Vol. 6',desc:'Comedia escolar con un giro: el instituto está construido sobre una antigua base militar.',price:9.95,stock:15},
+    {id:'mg9',cat:'manga',icon:'book',name:'Reactor 9 — Vol. 2',desc:'Thriller de ciencia ficción sobre los técnicos que mantienen viva la última central de la Tierra.',price:10.50,stock:5},
+    {id:'mg10',cat:'manga',icon:'book',name:'Susurros del Subsuelo — Vol. 3',desc:'Bajo las vías del metro abandonado, una comunidad guarda el último jardín de la ciudad.',price:10.95,stock:13},
+
+    // CARTAS
+    {id:'tc1',cat:'cartas',icon:'cards',name:'Arcanos de Neón — Caja de Sobres',desc:'36 sobres del set base. Incluye al menos 2 cartas holográficas garantizadas por caja.',price:74.90,stock:8},
+    {id:'tc2',cat:'cartas',icon:'cards',name:'Guerra de Autómatas — Display Box',desc:'Display completo de la expansión mecha. Ideal para torneos y apertura en grupo.',price:89.00,stock:5},
+    {id:'tc3',cat:'cartas',icon:'cards',name:'Pactos Oscuros — Caja Booster',desc:'La expansión más buscada del año, con criaturas del inframundo y nuevas mecánicas de invocación.',price:79.95,stock:10},
+    {id:'tc4',cat:'cartas',icon:'cards',name:'Skyline Duel — Caja de Torneo',desc:'Formato competitivo oficial, incluye tapete de juego y contadores de daño exclusivos.',price:64.50,stock:6},
+    {id:'tc5',cat:'cartas',icon:'cards',name:'Reinos Fracturados — Caja Coleccionista',desc:'Edición de lujo con acabados metalizados y una carta promocional numerada.',price:110.00,stock:3},
+    {id:'tc6',cat:'cartas',icon:'cards',name:'Cazadores de Sombra — Booster Box',desc:'36 sobres centrados en el arquetipo de cazadores nocturnos y sus invocaciones espectrales.',price:82.00,stock:9},
+    {id:'tc7',cat:'cartas',icon:'cards',name:'Circuito Eterno — Edición Especial',desc:'Reimpresión de las cartas clásicas más demandadas, con arte alternativo exclusivo.',price:95.00,stock:4},
+    {id:'tc8',cat:'cartas',icon:'cards',name:'Bestiario Digital — Caja Starter',desc:'La forma perfecta de empezar: dos mazos preconstruidos listos para jugar desde la primera partida.',price:39.90,stock:16},
+    {id:'tc9',cat:'cartas',icon:'cards',name:'Imperio de Cristal — Caja Premium',desc:'Set premium con sobres de foil reforzado y una miniatura coleccionable incluida.',price:99.90,stock:5},
+    {id:'tc10',cat:'cartas',icon:'cards',name:'Últimos Guardianes — Caja Booster',desc:'Expansión de cierre de ciclo, con las cartas legendarias más poderosas del juego hasta la fecha.',price:87.50,stock:7},
+
+    // FIGURAS
+    {id:'fg1',cat:'figuras',icon:'figure',name:'Kaida, Centinela de Neón (1/7)',desc:'Figura a escala 1/7 en PVC pintado a mano, con base iluminada de acrílico incluida.',price:129.00,stock:4},
+    {id:'fg2',cat:'figuras',icon:'figure',name:'Ryuzo Acorazado — Edición Limitada',desc:'Versión articulada con armadura intercambiable y arma desmontable. Tirada limitada numerada.',price:159.00,stock:2},
+    {id:'fg3',cat:'figuras',icon:'figure',name:'Mika Chibi — Serie Nocturna',desc:'Versión deformada de la protagonista de Nightshade High, con expresión intercambiable.',price:34.90,stock:22},
+    {id:'fg4',cat:'figuras',icon:'figure',name:'Vex, Cazador de Sombras (1/6)',desc:'Escultura detallada en resina con capa de tela real y peana temática incluida.',price:189.00,stock:3},
+    {id:'fg5',cat:'figuras',icon:'figure',name:'Orin, Sacerdotisa del Vacío',desc:'Figura de estudio con efectos de tela translúcida y pintura degradada a mano.',price:145.00,stock:5},
+    {id:'fg6',cat:'figuras',icon:'figure',name:'Nendo Tetsu — Versión Chibi',desc:'Figura desmontable estilo nendoroid, con tres caras intercambiables y accesorios.',price:42.00,stock:17},
+    {id:'fg7',cat:'figuras',icon:'figure',name:'Sable, la Androide Rebelde',desc:'Figura articulada con más de 20 puntos de movimiento y set de manos intercambiables.',price:98.50,stock:6},
+    {id:'fg8',cat:'figuras',icon:'figure',name:'Kessho Dragón Menor',desc:'Escultura de sobremesa de edición limitada, inspirada en la mascota de la saga insignia.',price:76.00,stock:8},
+    {id:'fg9',cat:'figuras',icon:'figure',name:'Yumi, Piloto de Mecha',desc:'Figura con traje de piloto detallado y casco desmontable, escala 1/8.',price:112.00,stock:5},
+    {id:'fg10',cat:'figuras',icon:'figure',name:'Ghost Walker — Deluxe',desc:'Edición deluxe con base diorama incluida que recrea una calle de Ciudad Fantasma.',price:175.00,stock:2}
+  ];
+
+  const money = n => n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' €';
+
+  // ---- render catalog ----
+  const grids = {manga:document.getElementById('grid-manga'),cartas:document.getElementById('grid-cartas'),figuras:document.getElementById('grid-figuras')};
+
+  products.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-visual">
+        ${icon(p.icon)}
+        <span class="stock-badge">Stock: ${p.stock}</span>
+      </div>
+      <div class="card-body">
+        <h3>${p.name}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="card-foot">
+          <span class="price">${money(p.price)}</span>
+          <button class="add-btn" data-id="${p.id}">Añadir</button>
+        </div>
+      </div>
+    `;
+    const section = grids[p.cat].closest('section');
+    section.classList.add('cat-'+p.cat);
+    card.classList.add('cat-'+p.cat);
+    grids[p.cat].appendChild(card);
+  });
+
+  // ---- cart state (in-memory only) ----
+  const cart = {}; // id -> qty
+
+  const cartToggle = document.getElementById('cartToggle');
+  const closeCart = document.getElementById('closeCart');
+  const cartDrawer = document.getElementById('cartDrawer');
+  const overlay = document.getElementById('overlay');
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartCountEl = document.getElementById('cartCount');
+  const cartSubtotalEl = document.getElementById('cartSubtotal');
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  const modal = document.getElementById('checkoutModal');
+  const modalCard = document.getElementById('modalCard');
+
+  function openDrawer(){cartDrawer.classList.add('open');overlay.classList.add('show');}
+  function closeDrawer(){cartDrawer.classList.remove('open');overlay.classList.remove('show');}
+
+  cartToggle.addEventListener('click',openDrawer);
+  closeCart.addEventListener('click',closeDrawer);
+  overlay.addEventListener('click',()=>{closeDrawer();closeModal();});
+
+  function productById(id){return products.find(p=>p.id===id);}
+
+  function addToCart(id){
+    const p = productById(id);
+    const currentQty = cart[id] || 0;
+    if(currentQty >= p.stock) return;
+    cart[id] = currentQty + 1;
+    renderCart();
+    openDrawer();
+  }
+
+  function changeQty(id,delta){
+    const p = productById(id);
+    let qty = (cart[id]||0) + delta;
+    if(qty <= 0){delete cart[id];}
+    else if(qty > p.stock){qty = p.stock; cart[id]=qty;}
+    else{cart[id]=qty;}
+    renderCart();
+  }
+
+  function removeItem(id){
+    delete cart[id];
+    renderCart();
+  }
+
+  function cartTotal(){
+    return Object.entries(cart).reduce((sum,[id,qty])=>sum + productById(id).price*qty,0);
+  }
+  function cartCount(){
+    return Object.values(cart).reduce((a,b)=>a+b,0);
+  }
+
+  function renderCart(){
+    const ids = Object.keys(cart);
+    cartCountEl.textContent = cartCount();
+    cartSubtotalEl.textContent = money(cartTotal());
+    checkoutBtn.disabled = ids.length===0;
+
+    if(ids.length===0){
+      cartItemsEl.innerHTML = '<p class="cart-empty">Tu carrito está vacío. Añade algún manga, caja de cartas o figura del catálogo.</p>';
+      return;
+    }
+
+    cartItemsEl.innerHTML = ids.map(id=>{
+      const p = productById(id);
+      const qty = cart[id];
+      return `
+        <div class="cart-item">
+          <div class="mini-icon">${icon(p.icon)}</div>
+          <div class="cart-item-info">
+            <h5>${p.name}</h5>
+            <div class="qty-row">
+              <button class="qty-btn" data-action="dec" data-id="${id}">−</button>
+              <span>${qty}</span>
+              <button class="qty-btn" data-action="inc" data-id="${id}">+</button>
+            </div>
+          </div>
+          <div class="cart-item-price">${money(p.price*qty)}</div>
+          <button class="remove-link" data-action="remove" data-id="${id}">Quitar</button>
+        </div>
+      `;
+    }).join('');
+  }
+
+  document.querySelectorAll('.add-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      addToCart(btn.dataset.id);
+      btn.classList.add('added');
+      btn.textContent='Añadido ✓';
+      setTimeout(()=>{btn.classList.remove('added');btn.textContent='Añadir';},900);
+    });
+  });
+
+  cartItemsEl.addEventListener('click',(e)=>{
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    const id = btn.dataset.id;
+    const action = btn.dataset.action;
+    if(action==='inc') changeQty(id,1);
+    if(action==='dec') changeQty(id,-1);
+    if(action==='remove') removeItem(id);
+  });
+
+  // ---- checkout modal ----
+  function openModal(){modal.classList.add('show');overlay.classList.add('show');}
+  function closeModal(){modal.classList.remove('show');}
+
+  function renderCheckoutForm(){
+    const ids = Object.keys(cart);
+    const lines = ids.map(id=>{
+      const p = productById(id); const qty = cart[id];
+      return `<div><span>${qty} × ${p.name}</span><span>${money(p.price*qty)}</span></div>`;
+    }).join('');
+    modalCard.innerHTML = `
+      <h3>Finalizar compra</h3>
+      <p class="sub">Pedido de demostración — no se realizará ningún cargo real.</p>
+      <div class="order-summary">
+        ${lines}
+        <div class="total-line"><div><span>Total</span><span>${money(cartTotal())}</span></div></div>
+      </div>
+      <form id="checkoutForm">
+        <div class="field">
+          <label for="fname">Nombre completo</label>
+          <input id="fname" type="text" placeholder="Nombre y apellidos" required>
+        </div>
+        <div class="field">
+          <label for="femail">Correo electrónico</label>
+          <input id="femail" type="email" placeholder="tucorreo@ejemplo.com" required>
+        </div>
+        <div class="field">
+          <label for="faddress">Dirección de envío</label>
+          <input id="faddress" type="text" placeholder="Calle, número, ciudad" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="fcard">Número de tarjeta</label>
+            <input id="fcard" type="text" placeholder="0000 0000 0000 0000" required maxlength="19">
+          </div>
+          <div class="field" style="max-width:90px;">
+            <label for="fcvv">CVV</label>
+            <input id="fcvv" type="text" placeholder="123" required maxlength="4">
+          </div>
+        </div>
+        <button type="submit" class="checkout-btn">Confirmar pedido — ${money(cartTotal())}</button>
+      </form>
+    `;
+    document.getElementById('checkoutForm').addEventListener('submit',(e)=>{
+      e.preventDefault();
+      renderSuccess();
+    });
+  }
+
+  function renderSuccess(){
+    const orderNumber = 'DH-' + Math.floor(100000 + Math.random()*899999);
+    modalCard.innerHTML = `
+      <div class="success-box">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h3>Pedido confirmado</h3>
+        <p class="sub">Referencia <strong style="color:var(--text);">${orderNumber}</strong>. Te enviaremos la confirmación por correo con el seguimiento del envío.</p>
+        <button class="checkout-btn" id="closeSuccess">Volver a la tienda</button>
+      </div>
+    `;
+    document.getElementById('closeSuccess').addEventListener('click',()=>{
+      Object.keys(cart).forEach(id=>delete cart[id]);
+      renderCart();
+      closeModal();
+      closeDrawer();
+    });
+  }
+
+  checkoutBtn.addEventListener('click',()=>{
+    if(checkoutBtn.disabled) return;
+    renderCheckoutForm();
+    openModal();
+  });
+
+  renderCart();
+})();
+</script>
+
+</body>
+</html>
